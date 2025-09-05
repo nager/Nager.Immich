@@ -46,12 +46,17 @@ var people = await client.GetPeoplesAsync();
 // Search assets by metadata
 var assets = await client.GetAssetsAsync(new AssetFilterRequest
 {
-    TakenAfter = new DateTime(2024, 1, 1)
+    PersonIds = ['person-1']
 });
 
 // Create a shared link
 var sharedLink = await client.CreateSharedLinkAsync(new ShareLinkCreateRequest
 {
-    AlbumId = "album-id"
+    Type = "INDIVIDUAL",
+    Description = "my collection1",
+    AllowDownload = true,
+    AllowUpload = false,
+    ExpiresAt = DateTime.Today.AddDays(7),
+    AssetIds = ['asset-1']
 });
 ```
