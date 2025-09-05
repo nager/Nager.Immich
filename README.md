@@ -1,0 +1,57 @@
+# Immich .NET API Client
+
+A lightweight .NET client for interacting with the [Immich](https://immich.app/) self-hosted photo and video management solution.  
+This library provides a strongly-typed wrapper around the Immich REST API for managing albums, people, assets, and shared links.
+
+## Features
+
+- ✅ Authentication with API key
+- 📂 Manage albums (create, list, delete)
+- 👥 Retrieve people metadata
+- 🖼 Query assets via metadata filters
+- 🔗 Create shared links
+- 📝 Built-in logging with `ILogger`
+
+## Usage
+
+```cs
+using ImmichClient;
+using Microsoft.Extensions.Logging;
+
+var httpClient = new HttpClient();
+var logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<ImmichApiClient>();
+
+var client = new ImmichApiClient(
+    httpClient,
+    apiKey: "<YOUR_API_KEY>",
+    baseAddress: "https://your-immich-server/api/",
+    logger: logger
+);
+
+// Get all albums
+var albums = await client.GetAlbumAsync();
+
+// Create a new album
+var created = await client.CreateAlbumAsync(new AlbumCreateRequest
+{
+    AlbumName = "My Holiday"
+});
+
+// Delete an album
+await client.DeleteAlbumAsync("album-id");
+
+// Get people metadata
+var people = await client.GetPeoplesAsync();
+
+// Search assets by metadata
+var assets = await client.GetAssetsAsync(new AssetFilterRequest
+{
+    TakenAfter = new DateTime(2024, 1, 1)
+});
+
+// Create a shared link
+var sharedLink = await client.CreateSharedLinkAsync(new ShareLinkCreateRequest
+{
+    AlbumId = "album-id"
+});
+```
