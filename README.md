@@ -60,3 +60,7 @@ var sharedLink = await client.CreateSharedLinkAsync(new ShareLinkCreateRequest
     AssetIds = ['asset-1']
 });
 ```
+
+## Swagger Source
+
+https://raw.githubusercontent.com/immich-app/immich/refs/heads/main/open-api/immich-openapi-specs.json

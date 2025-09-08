@@ -1,6 +1,6 @@
 ﻿namespace ImmichClient
 {
-    public class Person
+    public class PersonResponseDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

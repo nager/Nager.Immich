@@ -22,7 +22,7 @@ namespace ImmichClient
             this._httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-api-key", apiKey);
         }
 
-        public async Task<Album[]?> GetAlbumAsync(
+        public async Task<AlbumResponseDto[]?> GetAlbumAsync(
             CancellationToken cancellationToken = default)
         {
             using var responseMessage = await this._httpClient.GetAsync("albums", cancellationToken);
@@ -31,11 +31,11 @@ namespace ImmichClient
                 return null;
             }
 
-            return await responseMessage.Content.ReadFromJsonAsync<Album[]>(cancellationToken);
+            return await responseMessage.Content.ReadFromJsonAsync<AlbumResponseDto[]>(cancellationToken);
         }
 
         public async Task<bool> CreateAlbumAsync(
-            AlbumCreateRequest createRequest,
+            CreateAlbumDto createRequest,
             CancellationToken cancellationToken = default)
         {
             using var responseMessage = await this._httpClient.PostAsJsonAsync("albums", createRequest, cancellationToken);
@@ -50,7 +50,7 @@ namespace ImmichClient
             return responseMessage.IsSuccessStatusCode;
         }
 
-        public async Task<PeopleResponse?> GetPeoplesAsync(
+        public async Task<PeopleResponseDto?> GetPeoplesAsync(
             CancellationToken cancellationToken = default)
         {
             using var responseMessage = await this._httpClient.GetAsync("people", cancellationToken);
@@ -59,11 +59,11 @@ namespace ImmichClient
                 return null;
             }
 
-            return await responseMessage.Content.ReadFromJsonAsync<PeopleResponse>(cancellationToken);
+            return await responseMessage.Content.ReadFromJsonAsync<PeopleResponseDto>(cancellationToken);
         }
 
-        public async Task<AssetResponse?> GetAssetsAsync(
-            AssetFilterRequest filterRequest,
+        public async Task<SearchResponseDto?> GetAssetsAsync(
+            MetadataSearchDto filterRequest,
             CancellationToken cancellationToken= default)
         {
             using var responseMessage = await this._httpClient.PostAsJsonAsync("search/metadata", filterRequest, cancellationToken);
@@ -72,11 +72,11 @@ namespace ImmichClient
                 return null;
             }
 
-            return await responseMessage.Content.ReadFromJsonAsync<AssetResponse>(cancellationToken);
+            return await responseMessage.Content.ReadFromJsonAsync<SearchResponseDto>(cancellationToken);
         }
 
-        public async Task<SharedLinkResponse?> CreateSharedLinkAsync(
-            ShareLinkCreateRequest createRequest,
+        public async Task<SharedLinkResponseDto?> CreateSharedLinkAsync(
+            SharedLinkCreateDto createRequest,
             CancellationToken cancellationToken = default)
         {
             using var responseMessage = await this._httpClient.PostAsJsonAsync("shared-links", createRequest, cancellationToken);
@@ -85,7 +85,7 @@ namespace ImmichClient
                 return null;
             }
 
-            return await responseMessage.Content.ReadFromJsonAsync<SharedLinkResponse>(cancellationToken);
+            return await responseMessage.Content.ReadFromJsonAsync<SharedLinkResponseDto>(cancellationToken);
         }
     }
 }

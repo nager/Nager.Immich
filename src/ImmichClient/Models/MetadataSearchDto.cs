@@ -1,6 +1,6 @@
 ﻿namespace ImmichClient
 {
-    public class AssetFilterRequest
+    public class MetadataSearchDto
     {
         public string[] PersonIds { get; set; } = [];
     }

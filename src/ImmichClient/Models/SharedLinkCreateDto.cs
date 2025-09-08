@@ -1,9 +1,13 @@
 ﻿namespace ImmichClient
 {
-    public class ShareLinkCreateRequest
+    public class SharedLinkCreateDto
     {
         public bool AllowDownload {  get; set; }
         public bool AllowUpload { get; set; } = false;
+
+        /// <summary>
+        /// SharedLinkType (ALBUM or INDIVIDUAL)
+        /// </summary>
         public string Type { get; set; }
         public string[] AssetIds { get; set; } = [];
         public DateTime? ExpiresAt { get; set; }

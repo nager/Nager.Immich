@@ -1,6 +1,6 @@
 ﻿namespace ImmichClient
 {
-    public class Item
+    public class AssetResponseDto
     {
         public string Id { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -23,8 +23,8 @@
         public string Visibility { get; set; }
         public string Duration { get; set; }
         public object LivePhotoVideoId { get; set; }
-        public Person[] People { get; set; }
-        public Face[] UnassignedFaces { get; set; }
+        public PersonResponseDto[] People { get; set; }
+        public AssetFaceWithoutPersonResponseDto[] UnassignedFaces { get; set; }
         public string Checksum { get; set; }
         public bool IsOffline { get; set; }
         public bool HasMetadata { get; set; }
