@@ -32,7 +32,7 @@ var client = new ImmichApiClient(
 var albums = await client.GetAlbumAsync();
 
 // Create a new album
-var created = await client.CreateAlbumAsync(new AlbumCreateRequest
+var created = await client.CreateAlbumAsync(new CreateAlbumDto
 {
     AlbumName = "My Holiday"
 });
@@ -44,13 +44,13 @@ await client.DeleteAlbumAsync("album-id");
 var people = await client.GetPeoplesAsync();
 
 // Search assets by metadata
-var assets = await client.GetAssetsAsync(new AssetFilterRequest
+var assets = await client.GetAssetsAsync(new MetadataSearchDto
 {
     PersonIds = ['person-1']
 });
 
 // Create a shared link
-var sharedLink = await client.CreateSharedLinkAsync(new ShareLinkCreateRequest
+var sharedLink = await client.CreateSharedLinkAsync(new SharedLinkCreateDto
 {
     Type = "INDIVIDUAL",
     Description = "my collection1",
