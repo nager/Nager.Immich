@@ -20,7 +20,7 @@ using Nager.Immich.Models;
 using Microsoft.Extensions.Logging;
 
 var httpClient = new HttpClient();
-var logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<ImmichApiClient>();
+var logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<ImmichClient>();
 
 var client = new ImmichClient(
     httpClient,
