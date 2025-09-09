@@ -1,4 +1,4 @@
-﻿namespace ImmichClient.Models
+﻿namespace Nager.Immich.Models
 {
     public class AlbumsAddAssetsResponseDto
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImmichClient.Models
+namespace Nager.Immich.Models
 {
     public class SearchFacetCountResponseDto
     {

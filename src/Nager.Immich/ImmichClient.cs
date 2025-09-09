@@ -1,24 +1,24 @@
-﻿using ImmichClient.Models;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Nager.Immich.Models;
 using System.Net.Http.Json;
 
-namespace ImmichClient
+namespace Nager.Immich
 {
-    public class ImmichApiClient
+    public class ImmichClient
     {
         private readonly HttpClient _httpClient;
-        private readonly ILogger<ImmichApiClient> _logger;
+        private readonly ILogger<ImmichClient> _logger;
 
-        public ImmichApiClient(
+        public ImmichClient(
             HttpClient httpClient,
             string apiKey,
             string baseAddress,
-            ILogger<ImmichApiClient>? logger = default)
+            ILogger<ImmichClient>? logger = default)
         {
             this._httpClient = httpClient;
             this._httpClient.BaseAddress = new Uri(baseAddress);
-            this._logger = logger ?? new NullLogger<ImmichApiClient>();
+            this._logger = logger ?? new NullLogger<ImmichClient>();
 
             this._httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-api-key", apiKey);
         }

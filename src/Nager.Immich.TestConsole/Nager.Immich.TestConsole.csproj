@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImmichClient\ImmichClient.csproj" />
+    <ProjectReference Include="..\Nager.Immich\Nager.Immich.csproj" />
   </ItemGroup>
 
 </Project>
