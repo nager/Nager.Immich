@@ -1,11 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <Authors>Tino Hager</Authors>
+    <Company>nager.at</Company>
+    <Description>A lightweight .NET client for interacting with the Immich self-hosted photo and video management solution.</Description>
+	  
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  
+    <LangVersion>12.0</LangVersion>
+    <IncludeSymbols>true</IncludeSymbols>
+
     <Nullable>enable</Nullable>
+	  
+    <!--<PackageIcon>icon.png</PackageIcon>-->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <!--<PackageReadmeFile>README.md</PackageReadmeFile>-->
+    <PackageProjectUrl>https://github.com/nager/Nager.Immich</PackageProjectUrl>
+    <PackageTags>Immich;ImmichApi</PackageTags>
+
+    <RepositoryUrl>https://github.com/nager/Nager.Immich</RepositoryUrl>
+
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="LICENSE" />
+  </ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
   </ItemGroup>

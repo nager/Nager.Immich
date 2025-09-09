@@ -1,4 +1,6 @@
-﻿namespace Nager.Immich.Models
+﻿using System;
+
+namespace Nager.Immich.Models
 {
     public class AlbumResponseDto
     {
