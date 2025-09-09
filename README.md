@@ -15,7 +15,8 @@ This library provides a strongly-typed wrapper around the Immich REST API for ma
 ## Usage
 
 ```cs
-using ImmichClient;
+using Nager.Immich;
+using Nager.Immich.Models;
 using Microsoft.Extensions.Logging;
 
 var httpClient = new HttpClient();
