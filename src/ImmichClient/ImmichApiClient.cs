@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using ImmichClient.Models;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Net.Http.Json;
 
@@ -63,6 +64,40 @@ namespace ImmichClient
             return responseMessage.IsSuccessStatusCode;
         }
 
+        public async Task<AlbumsAddAssetsResponseDto?> AddAssetsToAlbumAsync(
+            AlbumsAddAssetsDto albumsAddAssets,
+            CancellationToken cancellationToken = default)
+        {
+            using var responseMessage = await this._httpClient.PutAsJsonAsync("albums/assets", albumsAddAssets, cancellationToken);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return await responseMessage.Content.ReadFromJsonAsync<AlbumsAddAssetsResponseDto>(cancellationToken);
+        }
+
+        public async Task<BulkIdResponseDto[]?> RemoveAssetFromAlbumAsync(
+            string albumId,
+            BulkIdsDto bulkIds,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"albums/{albumId}/assets", UriKind.Relative),
+                Content = JsonContent.Create(bulkIds)
+            };
+
+            using var responseMessage = await this._httpClient.SendAsync(request, cancellationToken);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return await responseMessage.Content.ReadFromJsonAsync<BulkIdResponseDto[]>(cancellationToken);
+        }
+
         public async Task<PeopleResponseDto?> GetPeoplesAsync(
             CancellationToken cancellationToken = default)
         {
@@ -76,10 +111,10 @@ namespace ImmichClient
         }
 
         public async Task<SearchResponseDto?> GetAssetsAsync(
-            MetadataSearchDto filterRequest,
+            MetadataSearchDto metadataSearch,
             CancellationToken cancellationToken= default)
         {
-            using var responseMessage = await this._httpClient.PostAsJsonAsync("search/metadata", filterRequest, cancellationToken);
+            using var responseMessage = await this._httpClient.PostAsJsonAsync("search/metadata", metadataSearch, cancellationToken);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 return null;
@@ -89,10 +124,10 @@ namespace ImmichClient
         }
 
         public async Task<SharedLinkResponseDto?> CreateSharedLinkAsync(
-            SharedLinkCreateDto createRequest,
+            SharedLinkCreateDto sharedLinkCreate,
             CancellationToken cancellationToken = default)
         {
-            using var responseMessage = await this._httpClient.PostAsJsonAsync("shared-links", createRequest, cancellationToken);
+            using var responseMessage = await this._httpClient.PostAsJsonAsync("shared-links", sharedLinkCreate, cancellationToken);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 return null;
