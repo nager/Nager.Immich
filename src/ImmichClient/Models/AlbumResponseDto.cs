@@ -6,7 +6,7 @@
         public string AlbumThumbnailAssetId { get; set; }
         public object[] AlbumUsers { get; set; }
         public int AssetCount { get; set; }
-        public object[] Assets { get; set; }
+        public AssetResponseDto[] Assets { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

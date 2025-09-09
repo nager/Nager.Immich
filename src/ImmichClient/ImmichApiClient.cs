@@ -22,7 +22,7 @@ namespace ImmichClient
             this._httpClient.DefaultRequestHeaders.TryAddWithoutValidation("x-api-key", apiKey);
         }
 
-        public async Task<AlbumResponseDto[]?> GetAlbumAsync(
+        public async Task<AlbumResponseDto[]?> GetAlbumsAsync(
             CancellationToken cancellationToken = default)
         {
             using var responseMessage = await this._httpClient.GetAsync("albums", cancellationToken);
@@ -32,6 +32,19 @@ namespace ImmichClient
             }
 
             return await responseMessage.Content.ReadFromJsonAsync<AlbumResponseDto[]>(cancellationToken);
+        }
+
+        public async Task<AlbumResponseDto?> GetAlbumAsync(
+            string albumId,
+            CancellationToken cancellationToken = default)
+        {
+            using var responseMessage = await this._httpClient.GetAsync($"albums/{albumId}", cancellationToken);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return await responseMessage.Content.ReadFromJsonAsync<AlbumResponseDto>(cancellationToken);
         }
 
         public async Task<bool> CreateAlbumAsync(
