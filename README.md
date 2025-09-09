@@ -21,7 +21,7 @@ using Microsoft.Extensions.Logging;
 var httpClient = new HttpClient();
 var logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<ImmichApiClient>();
 
-var client = new ImmichApiClient(
+var client = new ImmichClient(
     httpClient,
     apiKey: "<YOUR_API_KEY>",
     baseAddress: "https://your-immich-server/api/",
