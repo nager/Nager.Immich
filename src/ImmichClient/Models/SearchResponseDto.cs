@@ -1,4 +1,4 @@
-﻿namespace ImmichClient
+﻿namespace ImmichClient.Models
 {
     public class SearchResponseDto
     {

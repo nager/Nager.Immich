@@ -1,6 +1,4 @@
-﻿using ImmichClient.Models;
-
-namespace ImmichClient
+﻿namespace ImmichClient.Models
 {
     public class SearchAlbumResponseDto
     {
