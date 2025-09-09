@@ -112,7 +112,7 @@ namespace ImmichClient
 
         public async Task<SearchResponseDto?> GetAssetsAsync(
             MetadataSearchDto metadataSearch,
-            CancellationToken cancellationToken= default)
+            CancellationToken cancellationToken = default)
         {
             using var responseMessage = await this._httpClient.PostAsJsonAsync("search/metadata", metadataSearch, cancellationToken);
             if (!responseMessage.IsSuccessStatusCode)
