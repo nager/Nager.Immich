@@ -33,7 +33,7 @@ jobs:
       #  run: dotnet test ./src --configuration Release --no-build --verbosity normal
       
       - name: Pack
-        run: dotnet pack ./src --configuration Release --no-restore --no-build --output ./out
+        run: dotnet pack ./src/Nager.Immich/Nager.Immich.csproj --configuration Release --no-restore --no-build --output ./out
 
       - name: Upload
         uses: actions/upload-artifact@v4
