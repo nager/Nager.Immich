@@ -33,6 +33,8 @@ namespace Nager.Immich
             using var responseMessage = await this._httpClient.GetAsync("albums", cancellationToken);
             if (!responseMessage.IsSuccessStatusCode)
             {
+                this._logger.LogError($"{nameof(GetAlbumsAsync)} - Cannot get albums, statusCode:{responseMessage.StatusCode}");
+
                 return null;
             }
 
@@ -46,6 +48,8 @@ namespace Nager.Immich
             using var responseMessage = await this._httpClient.GetAsync($"albums/{albumId}", cancellationToken);
             if (!responseMessage.IsSuccessStatusCode)
             {
+                this._logger.LogError($"{nameof(GetAlbumAsync)} - Cannot get album, statusCode:{responseMessage.StatusCode}");
+
                 return null;
             }
 
