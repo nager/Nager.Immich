@@ -1,11 +1,17 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Nager.Immich.Helpers;
 using Nager.Immich.Models;
 using System;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Nager.Immich
 {
@@ -90,7 +96,7 @@ namespace Nager.Immich
             BulkIdsDto bulkIds,
             CancellationToken cancellationToken = default)
         {
-            var request = new HttpRequestMessage
+            using var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
                 RequestUri = new Uri($"albums/{albumId}/assets", UriKind.Relative),
@@ -129,6 +135,59 @@ namespace Nager.Immich
             }
 
             return await responseMessage.Content.ReadFromJsonAsync<SearchResponseDto>(cancellationToken);
+        }
+
+        public async Task<AssetMediaResponseDto?> UploadAssetAsync(
+            string filePath,
+            CancellationToken cancellationToken = default)
+        {
+            //TODO: AssetMediaCreateDto
+
+            var fileInfo = new FileInfo(filePath);
+            if (!fileInfo.Exists)
+            {
+                return null;
+            }
+
+            using var content = new MultipartFormDataContent
+            {
+                { new StringContent($"{filePath}-{fileInfo.LastWriteTimeUtc.Ticks}"), "deviceAssetId" },
+                { new StringContent("csharp"), "deviceId" },
+                { new StringContent(fileInfo.CreationTimeUtc.ToString("o")), "fileCreatedAt" },
+                { new StringContent(fileInfo.LastWriteTimeUtc.ToString("o")), "fileModifiedAt" },
+                { new StringContent("false"), "isFavorite" }
+            };
+
+            var checksum = FileHelper.ComputeSha1Checksum(filePath);
+            if (!string.IsNullOrEmpty(checksum))
+            {
+                content.Headers.Add("x-immich-checksum", checksum);
+            }
+
+            var fileBytes = await File.ReadAllBytesAsync(filePath, cancellationToken);
+
+            using var fileContent = new ByteArrayContent(fileBytes);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            content.Add(fileContent, "assetData", Path.GetFileName(filePath));
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("assets?slug=test", UriKind.Relative),
+                Content = content
+            };
+
+            using var responseMessage = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                var error = await responseMessage.Content.ReadAsStringAsync();
+
+                this._logger.LogError($"{nameof(UploadAssetAsync)} - {error}");
+
+                return null;
+            }
+
+            return await responseMessage.Content.ReadFromJsonAsync<AssetMediaResponseDto>(cancellationToken);
         }
 
         public async Task<SharedLinkResponseDto?> CreateSharedLinkAsync(
