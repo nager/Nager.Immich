@@ -12,6 +12,13 @@ This library provides a strongly-typed wrapper around the Immich REST API for ma
 - 🔗 Create shared links
 - 📝 Built-in logging with `ILogger`
 
+## How can I use it?
+
+The package is available via [NuGet](https://www.nuget.org/packages/Nager.Immich)
+```
+PM> install-package Nager.Immich
+```
+
 ## Usage
 
 ```cs
